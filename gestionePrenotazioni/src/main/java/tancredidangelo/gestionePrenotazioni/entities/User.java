@@ -17,9 +17,9 @@ import java.util.UUID;
 @Table(name = "users")
 public class User {
 
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private UUID userId;
+    private Long userId;
 
     @Column(nullable = false)
     private String name;
@@ -27,7 +27,7 @@ public class User {
     @Column(nullable = false)
     private String surname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

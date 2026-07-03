@@ -1,7 +1,9 @@
 package tancredidangelo.gestionePrenotazioni.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tancredidangelo.gestionePrenotazioni.entities.Workstation;
+import org.springframework.stereotype.Repository;
+import tancredidangelo.gestionePrenotazioni.entities.Booking;
 
-public interface BookingRepository extends JpaRepository<Workstation, Long> {
+@Repository
+public interface BookingRepository extends JpaRepository<Booking, Long> {
 }

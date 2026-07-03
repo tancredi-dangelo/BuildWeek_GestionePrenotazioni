@@ -27,12 +27,13 @@ public class Workstation {
     private String description;
 
     @Column(name = "max_number_of_people", nullable = false)
-    private String maxNumOfPeople;
+    private int maxNumOfPeople;
 
     @ManyToOne
-    @JoinColumn(name = "building_name")
+    @JoinColumn(name = "building_id")
     private Building building;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private WorkstationType workstationType;
 
@@ -47,12 +48,12 @@ public class Workstation {
 
     /// constructor
 
-    public Workstation(String description, String maxNumOfPeople, Building building, WorkstationType workstationType, WorkstationStatus workstationStatus) {
+    public Workstation(String description, int maxNumOfPeople, Building building, WorkstationType workstationType) {
         this.description = description;
         this.maxNumOfPeople = maxNumOfPeople;
         this.building = building;
         this.workstationType = workstationType;
-        this.workstationStatus = workstationStatus;
+        this.workstationStatus = WorkstationStatus.FREE;
     }
 
 

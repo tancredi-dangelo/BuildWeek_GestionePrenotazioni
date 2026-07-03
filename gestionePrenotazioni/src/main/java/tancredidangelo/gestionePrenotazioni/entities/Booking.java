@@ -55,10 +55,10 @@ public class Booking {
 
     // to string
 
-
     @Override
     public String toString() {
-        return "\nBooking{" +
+        return "\n---BOOKING CONFIRMED.---" +
+                "\nBooking{" +
                 "bookingId = " + bookingId +
                 ", workstation = " + workstation +
                 ", user = " + user +
