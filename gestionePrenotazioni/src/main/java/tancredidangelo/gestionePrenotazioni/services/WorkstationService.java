@@ -53,5 +53,10 @@ public class WorkstationService {
     }
 
 
+    public List<Workstation> findByCity(String city) {
+
+    }
+
+
 
 }

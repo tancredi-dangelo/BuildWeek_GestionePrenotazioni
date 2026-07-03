@@ -32,7 +32,7 @@ public class MainRunner implements CommandLineRunner
         populateDatabase.populateBuildingsAndWorkstations();
         populateDatabase.populateUsers();
 
-        Workstation workstation1 = workstationService.
+        Workstation workstation1 = workstationService
         bookingService.bookWorkstation();
 
 
