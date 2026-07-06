@@ -27,6 +27,9 @@ public class User {
     @Column(nullable = false)
     private String surname;
 
+    @Column(nullable = false)
+    private String username;
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -39,6 +42,7 @@ public class User {
     public User(String name, String surname, String email) {
         this.name = name;
         this.surname = surname;
+        this.username = name+"_"+surname;
         this.email = email;
     }
 
@@ -52,6 +56,7 @@ public class User {
                 "userId = " + userId +
                 ", name = '" + name + '\'' +
                 ", surname = '" + surname + '\'' +
+                ", username = " + username +
                 ", email = '" + email + '\'' +
                 ", activeBookings = " + activeBookings +
                 '}';

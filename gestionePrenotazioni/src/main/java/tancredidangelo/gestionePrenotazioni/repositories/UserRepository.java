@@ -1,26 +1,29 @@
 package tancredidangelo.gestionePrenotazioni.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import tancredidangelo.gestionePrenotazioni.entities.User;
-import tancredidangelo.gestionePrenotazioni.enums.BookingStatus;
 
 import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // derived queries
+    //// derived queries
 
-    public List<User> findByEmail(String email);
+    User findUserById(Long userId);
 
-    public List<User> findByName(String name);
+    List<User> findUserByEmail(String email);
 
-    public List<User> findBySurname(String surname);
+    List<User> findUserByName(String name);
+
+    List<User> findUserBySurname(String surname);
 
 
+    //// custom queries
+
+    // TODO: find users with active bookings
+    // List<User> findUsersWithActiveBookings
 
 
 }

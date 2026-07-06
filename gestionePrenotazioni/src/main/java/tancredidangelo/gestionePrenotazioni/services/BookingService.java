@@ -2,11 +2,11 @@ package tancredidangelo.gestionePrenotazioni.services;
 
 import org.springframework.stereotype.Service;
 import tancredidangelo.gestionePrenotazioni.entities.Booking;
-import tancredidangelo.gestionePrenotazioni.entities.User;
-import tancredidangelo.gestionePrenotazioni.entities.Workstation;
-import tancredidangelo.gestionePrenotazioni.enums.WorkstationStatus;
 import tancredidangelo.gestionePrenotazioni.repositories.BookingRepository;
+import tancredidangelo.gestionePrenotazioni.repositories.UserRepository;
+import tancredidangelo.gestionePrenotazioni.repositories.WorkstationRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,9 +14,13 @@ import java.util.Optional;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
+    private final UserRepository userRepository;
+    private final WorkstationRepository workstationRepository;
 
-    public BookingService(BookingRepository bookingRepository) {
+    public BookingService(BookingRepository bookingRepository, UserRepository userRepository, WorkstationRepository workstationRepository) {
         this.bookingRepository = bookingRepository;
+        this.userRepository = userRepository;
+        this.workstationRepository = workstationRepository;
     }
 
     // --------- METHODS ------------------------------------------------------------
@@ -49,15 +53,31 @@ public class BookingService {
     }
 
 
-    public void bookWorkstation(User user, Workstation workstation, int nPeople) {
-        if (workstation.getWorkstationStatus() == WorkstationStatus.FREE) {
-            Booking newBooking = new Booking(workstation, user, nPeople);
-            this.bookingRepository.save(newBooking);
-            workstation.setWorkstationStatus(WorkstationStatus.BUSY);
-            System.out.println(newBooking);
+    /// create a booking
 
-        } else {
-            System.out.println("This workstation is currently booked. Try again later.");
+    public void bookWorkstation(Long userId, Long workstationId, int nPeople, LocalDate date) {
+
+        List<Booking> workstationBookings = workstationRepository.findWorkstationById(workstationId).getBookings();
+        List<Booking> userBookings = userRepository.findUserById(userId).getActiveBookings();
+
+        if (userBookings.stream().anyMatch(booking -> booking.getDate().isEqual(date))) {
+            System.out.println("\nThis user already has a booking for that date. Choose another date");
+            return;
+        }
+
+        if (workstationBookings.stream().anyMatch(booking -> booking.getDate().isEqual(date))) {
+            System.out.println("\nThis workstation already booked for the provided date. Choose another date.");
+            return;
+        }
+
+        if (nPeople > workstationRepository.findWorkstationById(workstationId).getMaxNumOfPeople()) {
+            System.out.println("\nThis workstation doesn't have enough capacity for the number of people provided. Choose another workstation.");
+        }
+
+        else {
+            Booking newBooking = new Booking(workstationId, userId, nPeople, date);
+            this.bookingRepository.save(newBooking);
+            System.out.println(newBooking);
         }
     }
 }

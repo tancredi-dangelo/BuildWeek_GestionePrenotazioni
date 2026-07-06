@@ -21,8 +21,8 @@ public class UserService {
 
     // --------- METHODS ------------------------------------------------------------
 
-    public Optional<User> findUserById(Long id) {
-        return this.userRepository.findById(id);
+    public Optional<User> findUserById(Long userId) {
+        return this.userRepository.findById(userId);
     }
 
 
@@ -33,7 +33,7 @@ public class UserService {
 
     public void saveUser(User user) {
         this.userRepository.save(user);
-        System.out.println("User successfully saved in database.");
+        System.out.println("\nUser successfully saved in database.");
     }
 
 
@@ -41,13 +41,25 @@ public class UserService {
         Optional<User> userFound = findUserById(id);
         if (userFound.isPresent()) {
             this.userRepository.delete(userFound.get());
-            System.out.println("User successfully deleted from database.");
+            System.out.println("\nUser successfully deleted from database.");
         } else System.out.println("\nNo user with the provided ID was found in database.");
     }
 
 
     public void deleteAllUsers() {
         this.userRepository.deleteAll();
+    }
+
+    List<User> findByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    List<User> findByName(String name) {
+        return userRepository.findUserByName(name);
+    }
+
+    List<User> findBySurname(String surname) {
+        return userRepository.findUserBySurname(surname);
     }
 
 

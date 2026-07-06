@@ -44,7 +44,6 @@ public class Building {
     }
 
 
-
     // to string
 
     @Override

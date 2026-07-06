@@ -8,6 +8,7 @@ import lombok.Setter;
 import tancredidangelo.gestionePrenotazioni.enums.WorkstationStatus;
 import tancredidangelo.gestionePrenotazioni.enums.WorkstationType;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @NoArgsConstructor
@@ -46,19 +47,23 @@ public class Workstation {
 
 
 
-    /// constructor
+    // constructor
 
     public Workstation(String description, int maxNumOfPeople, Building building, WorkstationType workstationType) {
         this.description = description;
         this.maxNumOfPeople = maxNumOfPeople;
         this.building = building;
         this.workstationType = workstationType;
-        this.workstationStatus = WorkstationStatus.FREE;
+
+        LocalDate today = LocalDate.now();
+        this.workstationStatus = bookings.stream().anyMatch(booking -> booking.getDate().isEqual(today))
+                ? WorkstationStatus.BUSY
+                : WorkstationStatus.FREE;
     }
 
 
 
-    /// to string
+    // to string
 
     @Override
     public String toString() {

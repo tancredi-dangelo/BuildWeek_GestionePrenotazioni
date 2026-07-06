@@ -2,6 +2,7 @@ package tancredidangelo.gestionePrenotazioni.services;
 
 import org.springframework.stereotype.Service;
 import tancredidangelo.gestionePrenotazioni.entities.Building;
+import tancredidangelo.gestionePrenotazioni.enums.WorkstationType;
 import tancredidangelo.gestionePrenotazioni.repositories.BuildingRepository;
 
 
@@ -36,7 +37,7 @@ public class BuildingService {
 
     public void saveBuilding(Building building) {
         this.buildingRepository.save(building);
-        System.out.println("Building '" + building.getBuildingName() + "' successfully saved in database.");
+        System.out.println("\nBuilding '" + building.getBuildingName() + "' successfully saved in database.");
     }
 
 
@@ -52,6 +53,20 @@ public class BuildingService {
 
     public void deleteAllBuildings() {
         this.buildingRepository.deleteAll();
+    }
+
+    public List<Building> findByCity(String city) {
+        return buildingRepository.findByCity(city);
+    }
+
+
+    public List<Building> findBuildingByMaxNumOfPeople(int n) {
+        return buildingRepository.findBuildingByMaxNumOfPeople(n);
+    }
+
+
+    public List<Building> findBuildingByTypeOfWorkstation(WorkstationType workstationType) {
+        return buildingRepository.findBuildingByTypeOfWorkstation(workstationType);
     }
 
 

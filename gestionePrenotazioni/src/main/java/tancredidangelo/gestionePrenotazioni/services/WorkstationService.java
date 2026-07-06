@@ -2,6 +2,8 @@ package tancredidangelo.gestionePrenotazioni.services;
 
 import org.springframework.stereotype.Service;
 import tancredidangelo.gestionePrenotazioni.entities.Workstation;
+import tancredidangelo.gestionePrenotazioni.enums.WorkstationStatus;
+import tancredidangelo.gestionePrenotazioni.enums.WorkstationType;
 import tancredidangelo.gestionePrenotazioni.repositories.WorkstationRepository;
 
 import java.util.List;
@@ -34,7 +36,7 @@ public class WorkstationService {
 
     public void saveWorkstation(Workstation workstation) {
         this.workstationRepository.save(workstation);
-        System.out.println("Workstation '" + workstation.getDescription() + "' successfully saved in database.");
+        System.out.println("\nWorkstation '" + workstation.getDescription() + "' successfully saved in database.");
     }
 
 
@@ -42,9 +44,9 @@ public class WorkstationService {
         Optional<Workstation> workstationFound = findWorkstationById(id);
         if (workstationFound.isPresent()) {
             this.workstationRepository.delete(workstationFound.get());
-            System.out.println("User successfully deleted from database.");
+            System.out.println("\nWorkstation successfully deleted from database.");
         }
-        else System.out.println("\nNo user with the provided ID was found in database.");
+        else System.out.println("\nNo workstation with the provided ID was found in database.");
     }
 
 
@@ -53,8 +55,21 @@ public class WorkstationService {
     }
 
 
-    public List<Workstation> findByCity(String city) {
+    public List<Workstation> findWorkstationByCity(String city) {
+        return workstationRepository.findWorkstationByCity(city);
+    }
 
+
+    public List<Workstation> findWorkstationByNumOfPeople(int n) {
+        return workstationRepository.findWorkstationByNumOfPeople(n);
+    }
+
+    public List<Workstation> findWorkstationByType(WorkstationType workstationType) {
+        return workstationRepository.findWorkstationByType(workstationType);
+    }
+
+    public List<Workstation> findWorkstationByStatus(WorkstationStatus workstationStatus) {
+        return  workstationRepository.findWorkstationByStatus(workstationStatus);
     }
 
 
